@@ -262,8 +262,8 @@ export default function HomeScreen({
           </div>
         </section>
 
-        {/* Desktop-only extra sections */}
-        <section className="hidden lg:block">
+        {/* Best doctors */}
+        <section>
           <div className="section-head">
             <h2 className="section-title">أفضل الأطباء</h2>
             <button type="button" onClick={() => onSpecialtySelect("doctors")} className="section-link">الكل ←</button>

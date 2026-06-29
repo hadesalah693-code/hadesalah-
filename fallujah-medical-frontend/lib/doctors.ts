@@ -116,18 +116,47 @@ export function filterRecords(
   else if (tab === "labs") res = res.filter((r) => r._category === "labs");
   else if (tab === "clinics") res = res.filter((r) => r._category === "medical_complexes");
 
-  if (search.trim()) {
-    const q = search.trim().toLowerCase();
-    res = res.filter((r) =>
-      [r.name, r.qualifications, r.clinic, r.address, r._categoryLabel]
-        .some((f) => f?.toLowerCase().includes(q))
-    );
+  const q = normalizeSearchText(search);
+  if (q) {
+    res = res.filter((r) => recordSearchText(r).includes(q));
   }
   return [...res].sort((a, b) => {
     if (a.is_featured && !b.is_featured) return -1;
     if (!a.is_featured && b.is_featured) return 1;
     return (a.priority ?? 99) - (b.priority ?? 99);
   });
+}
+
+function normalizeSearchText(s: string): string {
+  return s
+    .trim()
+    .toLowerCase()
+    .replace(/[إأآا]/g, "ا")
+    .replace(/ى/g, "ي")
+    .replace(/ة/g, "ه")
+    .replace(/[^\u0600-\u06FFa-z0-9\s]/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function recordSearchText(r: FlatRecord): string {
+  return normalizeSearchText(
+    [
+      r.name,
+      r.qualifications,
+      r.clinic,
+      r.address,
+      r.services,
+      r.notes,
+      r.days,
+      r.hours,
+      r._categoryLabel,
+      ...(r.phones ?? []),
+      r.gmap_phone,
+    ]
+      .filter(Boolean)
+      .join(" ")
+  );
 }
 
 /* Stable doctor photo from Unsplash (seeded by name) */

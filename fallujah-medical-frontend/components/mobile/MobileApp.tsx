@@ -86,10 +86,17 @@ export default function MobileApp() {
 
   const handleSearchChange = useCallback((v: string) => {
     setSearch(v);
-    if (v.trim().length >= 2) setTab("search");
+    if (v.trim()) setTab("search");
   }, []);
 
   const goToSearch = useCallback(() => setTab("search"), []);
+
+  const handleBottomNav = useCallback((next: TabId) => {
+    setTab(next);
+    if (next === "search" && !search.trim() && !specialty) {
+      setSearchTab("all");
+    }
+  }, [search, specialty]);
 
   const favDoctors = DOCTORS.filter((d) => favorites.has(doctorId(d)));
 
@@ -111,8 +118,8 @@ export default function MobileApp() {
           <HomeScreen
             search={search}
             onSearchChange={handleSearchChange}
-            onSearchFocus={goToSearch}
-            onSearchEnter={goToSearch}
+            onSearchFocus={() => setTab("search")}
+            onSearchEnter={() => setTab("search")}
             onDoctorOpen={openDoctor}
             onDoctorBook={startBook}
             onSpecialtySelect={pickSpecialty}
@@ -216,7 +223,7 @@ export default function MobileApp() {
         )}
       </main>
 
-      <BottomNav active={tab} onChange={setTab} />
+      <BottomNav active={tab} onChange={handleBottomNav} />
 
       {selected && (
         <DoctorDetailView
