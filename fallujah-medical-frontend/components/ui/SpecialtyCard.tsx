@@ -13,14 +13,13 @@ interface SpecialtyCardProps {
 }
 
 export default function SpecialtyCard({
-  label, icon, count, categoryKey, img, active, onClick, variant = "grid", size = "md",
+  label, icon, count, categoryKey, img, active, onClick, variant = "photo", size = "md",
 }: SpecialtyCardProps) {
   const color = specialtyColor(categoryKey);
 
   const circleSize = size === "sm" ? "w-[64px] h-[64px]" : size === "lg" ? "w-[88px] h-[88px]" : "w-[72px] h-[72px]";
   const ringWidth = active ? "3px" : "2.5px";
 
-  /* ── Circular photo (primary style) ─────────────────── */
   if (variant === "photo" && img) {
     return (
       <button
@@ -28,7 +27,6 @@ export default function SpecialtyCard({
         onClick={onClick}
         className="group flex flex-col items-center gap-2 w-full transition-transform active:scale-95"
       >
-        {/* Circular image with colored ring */}
         <div
           className={[
             "relative rounded-full p-[2.5px] transition-all duration-200",
@@ -48,7 +46,6 @@ export default function SpecialtyCard({
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
             />
           </div>
-          {/* Icon badge */}
           {icon && (
             <span
               className="absolute -bottom-0.5 -right-0.5 w-6 h-6 rounded-full flex items-center justify-center text-[13px] shadow-md ring-2 ring-white"
@@ -59,7 +56,6 @@ export default function SpecialtyCard({
           )}
         </div>
 
-        {/* Label */}
         <div className="text-center px-0.5 w-full">
           <span className={`text-[10.5px] font-bold leading-tight line-clamp-2 block ${active ? "text-primary-700" : "text-gray-700"}`}>
             {label}
@@ -74,7 +70,6 @@ export default function SpecialtyCard({
     );
   }
 
-  /* ── Scroll — circular fallback ─────────────────────── */
   if (variant === "scroll") {
     return (
       <button type="button" onClick={onClick}
@@ -98,7 +93,6 @@ export default function SpecialtyCard({
     );
   }
 
-  /* ── Grid icon card ─────────────────────────────────── */
   return (
     <button type="button" onClick={onClick}
       className={[

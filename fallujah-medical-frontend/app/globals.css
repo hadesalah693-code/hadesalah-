@@ -260,4 +260,73 @@ a { color: inherit; text-decoration: none; }
   white-space: nowrap;
 }
 
+@keyframes kenBurns {
+  0%   { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.12) translate(-2%, -1%); }
+}
+
+/* ── Banner & hero video ───────────────────────────────── */
+.banner-ken-burns {
+  animation: kenBurns 12s ease-in-out infinite alternate;
+}
+.banner-badge {
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.banner-cta {
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.banner-card:hover .banner-ken-burns {
+  animation-play-state: paused;
+}
+.hero-video-overlay {
+  background: linear-gradient(
+    160deg,
+    rgba(10, 46, 42, 0.88) 0%,
+    rgba(15, 118, 110, 0.78) 45%,
+    rgba(13, 148, 136, 0.72) 100%
+  );
+}
+.hero-mobile-bg {
+  background: linear-gradient(165deg, #0a2e2a 0%, #0f766e 42%, #0d9488 100%);
+}
+.hero-mobile-panel {
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 10px 40px rgba(13, 148, 136, 0.22);
+}
+.hero-stat-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.25rem;
+  border-radius: 0.75rem;
+  background: #f0fdfa;
+  border: 1px solid #ccfbf1;
+}
+.trust-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .banner-ken-burns { animation: none; }
+}
+
 @media print { body * { visibility: hidden; } }

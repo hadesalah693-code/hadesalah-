@@ -2,11 +2,14 @@
 
 import type { FlatRecord } from "@/types";
 import { FEATURED, CLINICAL_SPECIALTIES, DOCTORS, filterRecords } from "@/lib/doctors";
+import { HERO_VIDEO, PROMO_VIDEOS } from "@/lib/media";
 import SearchBar from "../ui/SearchBar";
 import DoctorCard from "../ui/DoctorCard";
 import ClinicCard from "../ui/ClinicCard";
 import SpecialtyCard from "../ui/SpecialtyCard";
-import { IconCross, IconStethoscope, IconAlert, IconPill, IconFlask } from "../ui/Icons";
+import VideoBackground from "../ui/VideoBackground";
+import PromoBanner, { type PromoBannerData } from "../ui/PromoBanner";
+import { IconCross, IconStethoscope, IconAlert, IconPill, IconFlask, IconShield } from "../ui/Icons";
 
 interface HomeScreenProps {
   search: string;
@@ -31,19 +34,36 @@ const QUICK = [
   { label: "مختبرات", key: "labs",       from: "#d97706", to: "#b45309", Icon: IconFlask },
 ];
 
-const BANNERS = [
-  { title: "عيادات طب الأسنان", sub: "تقويم • زراعة • تجميل",
-    cta: "احجز الآن", href: "tel:+9647700000000", badge: "✦ مميز",
+const BANNERS: PromoBannerData[] = [
+  {
+    title: "عيادات طب الأسنان",
+    sub: "تقويم • زراعة • تجميل",
+    cta: "احجز الآن",
+    href: "tel:+9647700000000",
+    badge: "✦ مميز",
+    video: PROMO_VIDEOS.dental,
     img: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=600&q=80&auto=format&fit=crop",
-    overlay: "linear-gradient(140deg,rgba(7,89,79,0.93) 0%,rgba(13,148,136,0.80) 50%,rgba(13,148,136,0.05) 100%)" },
-  { title: "استشارة طبية فورية", sub: "أطباء متخصصون ٢٤/٧",
-    cta: "تواصل الآن", href: "tel:+9647700000000", badge: "⚡ متاح",
+    overlay: "linear-gradient(140deg,rgba(7,89,79,0.88) 0%,rgba(13,148,136,0.72) 55%,rgba(13,148,136,0.15) 100%)",
+  },
+  {
+    title: "استشارة طبية فورية",
+    sub: "أطباء متخصصون ٢٤/٧",
+    cta: "تواصل الآن",
+    href: "tel:+9647700000000",
+    badge: "⚡ متاح",
+    video: PROMO_VIDEOS.consult,
     img: "https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=600&q=80&auto=format&fit=crop",
-    overlay: "linear-gradient(140deg,rgba(29,78,216,0.93) 0%,rgba(79,70,229,0.80) 50%,rgba(79,70,229,0.05) 100%)" },
-  { title: "أضف عيادتك", sub: "تواصل مع آلاف المرضى",
-    cta: "سجّل مجاناً", href: "#contact", badge: "★ مجاني",
+    overlay: "linear-gradient(140deg,rgba(29,78,216,0.88) 0%,rgba(79,70,229,0.72) 55%,rgba(79,70,229,0.12) 100%)",
+  },
+  {
+    title: "أضف عيادتك",
+    sub: "تواصل مع آلاف المرضى",
+    cta: "سجّل مجاناً",
+    href: "#contact",
+    badge: "★ مجاني",
     img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80&auto=format&fit=crop",
-    overlay: "linear-gradient(140deg,rgba(109,40,217,0.93) 0%,rgba(139,92,246,0.80) 50%,rgba(139,92,246,0.05) 100%)" },
+    overlay: "linear-gradient(140deg,rgba(109,40,217,0.88) 0%,rgba(139,92,246,0.72) 55%,rgba(139,92,246,0.12) 100%)",
+  },
 ];
 
 const STATS = [
@@ -51,6 +71,12 @@ const STATS = [
   { n: String(CLINICAL_SPECIALTIES.length), label: "تخصص" },
   { n: "٤.٨",  label: "★" },
   { n: "٢٤",   label: "ساعة" },
+];
+
+const TRUST = [
+  { icon: IconShield, label: "دليل موثوق" },
+  { icon: IconStethoscope, label: "+٢٠٠ طبيب" },
+  { icon: IconCross, label: "مجاني ١٠٠٪" },
 ];
 
 export default function HomeScreen({
@@ -67,42 +93,62 @@ export default function HomeScreen({
     <div className="animate-fade-in">
 
       {/* ═══ HERO ═══ */}
-      <div className="relative overflow-hidden pb-14 lg:pb-24"
-        style={{ background: "linear-gradient(160deg,#0a2e2a 0%,#0f766e 50%,#0d9488 100%)" }}>
-
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute -top-16 -right-16 w-56 h-56 lg:w-72 lg:h-72 rounded-full"
-            style={{ background: "radial-gradient(circle,rgba(45,212,191,0.18),transparent 70%)" }} />
-          <div className="absolute bottom-10 -left-10 w-40 h-40 lg:w-56 lg:h-56 rounded-full"
-            style={{ background: "radial-gradient(circle,rgba(250,204,21,0.10),transparent 70%)" }} />
+      <div className="relative overflow-hidden pb-0 lg:pb-24">
+        {/* Desktop video */}
+        <div className="hidden lg:block absolute inset-0">
+          <VideoBackground src={HERO_VIDEO.src} poster={HERO_VIDEO.poster} className="scale-105" />
+          <div className="absolute inset-0 hero-video-overlay pointer-events-none" />
+        </div>
+        {/* Mobile gradient */}
+        <div className="lg:hidden absolute inset-0 hero-mobile-bg" />
+        <div className="hidden lg:block absolute inset-0 pointer-events-none">
+          <div className="absolute -top-16 -right-16 w-72 h-72 rounded-full"
+            style={{ background: "radial-gradient(circle,rgba(45,212,191,0.15),transparent 70%)" }} />
         </div>
 
-        <div className="relative page-container pt-[calc(0.75rem+env(safe-area-inset-top,0px))] lg:pt-16">
-          {/* Mobile app bar */}
-          <div className="flex items-center gap-2.5 mb-4 lg:hidden">
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center shadow-md"
-              style={{ background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.2)" }}>
-              <IconCross size={18} className="text-white" strokeWidth={2.5} />
+        <div className="relative page-container pt-[calc(0.5rem+env(safe-area-inset-top,0px))] pb-6 lg:pt-16 lg:pb-0">
+          {/* Mobile header */}
+          <div className="flex items-center justify-between mb-5 lg:hidden">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg"
+                style={{ background: "linear-gradient(145deg,#14b8a6,#0f766e)" }}>
+                <IconCross size={20} className="text-white" strokeWidth={2.5} />
+              </div>
+              <div className="min-w-0">
+                <p className="font-display font-extrabold text-white text-[16px] leading-tight">دليل الفلوجة الطبي</p>
+                <p className="text-teal-200/75 text-[10px] font-semibold">Fallujah Health Guide</p>
+              </div>
             </div>
-            <div className="min-w-0">
-              <p className="font-display font-extrabold text-white text-[15px] leading-tight truncate">دليل الفلوجة الطبي</p>
-              <p className="text-teal-200/80 text-[10px] font-semibold tracking-wide">FALLUJAH HEALTH</p>
-            </div>
+            <span className="text-[11px] font-bold text-teal-100 bg-white/15 px-2.5 py-1 rounded-full border border-white/20">
+              {greeting.replace(/[^\u0600-\u06FF\s]/g, "").trim()}
+            </span>
           </div>
 
           <div className="lg:flex lg:items-center lg:justify-between lg:gap-12">
             <div className="lg:flex-1">
-              <span className="inline-flex items-center gap-1.5 text-teal-200 text-[12px] font-semibold mb-2 lg:mb-3">
+              <span className="hidden lg:inline-flex items-center gap-1.5 text-teal-200 text-[12px] font-semibold mb-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-teal-300 animate-pulse" />
                 {greeting}
               </span>
-              <h1 className="font-display text-[22px] sm:text-[26px] lg:text-[44px] font-extrabold text-white leading-tight tracking-tight">
-                ابحث عن طبيب<br className="lg:hidden" />
-                <span className="text-teal-300"> في الفلوجة</span>
+              <h1 className="font-display text-[24px] lg:text-[44px] font-extrabold text-white leading-tight tracking-tight">
+                <span className="lg:hidden">ابحث عن </span>
+                <span className="text-teal-300">طبيبك</span>
+                <span className="lg:hidden"> بسهولة</span>
+                <span className="hidden lg:inline"><br />في الفلوجة</span>
               </h1>
-              <p className="text-teal-100/70 text-[13px] lg:text-[16px] mt-1.5 lg:mt-3 max-w-md">
+              <p className="text-teal-100/75 text-[13px] lg:text-[16px] mt-2 lg:mt-3 max-w-md hidden lg:block">
                 أطباء • عيادات • صيدليات • مختبرات
               </p>
+
+              <div className="hidden lg:flex flex-wrap gap-2 mt-4">
+                {TRUST.map(({ icon: Icon, label }) => (
+                  <span key={label} className="trust-pill">
+                    <Icon size={13} className="text-teal-200" />
+                    {label}
+                  </span>
+                ))}
+              </div>
+
               <div className="hidden lg:block mt-6 max-w-lg">
                 <SearchBar value={search} onChange={onSearchChange}
                   onFocus={onSearchFocus} onEnter={onSearchEnter}
@@ -110,56 +156,42 @@ export default function HomeScreen({
               </div>
             </div>
 
-            <div className="hidden lg:block flex-shrink-0">
-              <div className="relative w-[300px] h-[220px] rounded-2xl overflow-hidden shadow-[0_24px_64px_rgba(0,0,0,0.40)]"
-                style={{ border: "2px solid rgba(255,255,255,0.15)" }}>
-                <img src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=500&q=85&auto=format&fit=crop"
-                  alt="طبيب" className="w-full h-full object-cover" />
-                <div className="absolute bottom-0 inset-x-0 p-3"
-                  style={{ background: "linear-gradient(to top,rgba(7,89,79,0.95),transparent)" }}>
-                  <p className="font-display font-bold text-white text-[13px]">+٢٠٠ طبيب متخصص</p>
-                  <p className="text-teal-200 text-[11px] mt-0.5">دليل الفلوجة الطبي ✓</p>
+            <div className="hidden lg:grid grid-cols-4 gap-2 flex-shrink-0 w-[340px]">
+              {STATS.map((s) => (
+                <div key={s.label}
+                  className="flex flex-col items-center justify-center h-16 rounded-xl text-center"
+                  style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.18)" }}>
+                  <span className="font-display font-extrabold text-[16px] text-white leading-none">{s.n}</span>
+                  <span className="text-teal-200 text-[10px] mt-0.5">{s.label}</span>
                 </div>
-              </div>
-              <div className="flex gap-2 mt-3">
-                {STATS.map((s) => (
-                  <div key={s.label}
-                    className="flex flex-col items-center justify-center flex-1 h-14 rounded-xl text-center"
-                    style={{ background: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.15)" }}>
-                    <span className="font-display font-extrabold text-[16px] text-white leading-none">{s.n}</span>
-                    <span className="text-teal-200 text-[10px] mt-0.5">{s.label}</span>
-                  </div>
-                ))}
-              </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile: search + stats inside hero */}
+          <div className="lg:hidden mt-5 hero-mobile-panel rounded-2xl p-3 space-y-3">
+            <SearchBar value={search} onChange={onSearchChange}
+              onFocus={onSearchFocus} onEnter={onSearchEnter}
+              large placeholder="ابحث عن طبيب، تخصص، عيادة..." />
+            <div className="grid grid-cols-4 gap-1.5">
+              {STATS.map((s) => (
+                <div key={s.label} className="hero-stat-chip">
+                  <span className="font-display font-extrabold text-[13px] text-primary-700 leading-none">{s.n}</span>
+                  <span className="text-gray-400 text-[9px] font-medium mt-0.5">{s.label}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
         <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg"
-          className="absolute bottom-0 left-0 w-full" preserveAspectRatio="none" style={{ height: 48 }}>
+          className="relative lg:absolute lg:bottom-0 left-0 w-full pointer-events-none mt-4 lg:mt-0" preserveAspectRatio="none" style={{ height: 40 }}>
           <path d="M0,60 C480,0 960,0 1440,60 L1440,60 L0,60 Z" fill="#f0fdf9" />
         </svg>
       </div>
 
-      {/* Mobile search + stats */}
-      <div className="page-container -mt-7 lg:hidden space-y-2.5">
-        <div className="bg-white rounded-2xl shadow-[0_6px_24px_rgba(13,148,136,0.14)] p-2.5 border border-teal-100">
-          <SearchBar value={search} onChange={onSearchChange}
-            onFocus={onSearchFocus} onEnter={onSearchEnter}
-            large placeholder="ابحث عن طبيب، تخصص..." />
-        </div>
-        <div className="grid grid-cols-4 gap-1.5">
-          {STATS.map((s) => (
-            <div key={s.label} className="bg-white rounded-xl py-2 text-center shadow-[var(--shadow-soft)] border border-teal-50">
-              <span className="font-display font-extrabold text-[14px] text-primary-700 block leading-none">{s.n}</span>
-              <span className="text-gray-400 text-[9px] font-medium mt-0.5 block">{s.label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="page-container py-5 lg:py-8 mobile-section-gap">
+      {/* Content — mobile starts right after hero wave */}
+      <div className="page-container pt-4 lg:pt-0 pb-5 lg:py-8 mobile-section-gap">
 
         {/* Quick actions */}
         <section>
@@ -220,31 +252,15 @@ export default function HomeScreen({
           </div>
         </section>
 
-        {/* Banners */}
+        {/* Video & image banners */}
         <section>
-          <h2 className="section-title">عروض وخدمات</h2>
+          <div className="section-head">
+            <h2 className="section-title">عروض وخدمات</h2>
+            <span className="text-[10px] font-bold text-primary-600 bg-primary-50 px-2 py-0.5 rounded-full">🎬 فيديو حي</span>
+          </div>
           <div className="scroll-row mt-3.5 lg:mt-4 lg:grid lg:grid-cols-3 lg:overflow-visible lg:gap-5 lg:mx-0 lg:px-0">
             {BANNERS.map((b) => (
-              <a key={b.title} href={b.href}
-                className="flex-shrink-0 w-[calc(100vw-2.5rem)] max-w-[300px] lg:w-auto lg:max-w-none relative overflow-hidden rounded-2xl card-hover shadow-[var(--shadow-card)]"
-                style={{ minHeight: 168 }}
-              >
-                <img src={b.img} alt={b.title}
-                  className="absolute inset-0 w-full h-full object-cover" />
-                <div className="absolute inset-0" style={{ background: b.overlay }} />
-                <div className="relative z-10 p-4 h-full flex flex-col justify-end text-right">
-                  <span className="self-end mb-1.5 text-[10px] font-bold text-white px-2 py-0.5 rounded-full"
-                    style={{ background: "rgba(255,255,255,0.22)", backdropFilter: "blur(6px)" }}>
-                    {b.badge}
-                  </span>
-                  <p className="font-display font-extrabold text-white text-[15px] leading-tight">{b.title}</p>
-                  <p className="text-white/80 text-[11px] mt-0.5">{b.sub}</p>
-                  <span className="inline-flex self-end items-center mt-2 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg"
-                    style={{ background: "rgba(255,255,255,0.22)" }}>
-                    {b.cta} ←
-                  </span>
-                </div>
-              </a>
+              <PromoBanner key={b.title} banner={b} />
             ))}
           </div>
         </section>
