@@ -6,7 +6,7 @@ import SearchBar from "../ui/SearchBar";
 import DoctorCard from "../ui/DoctorCard";
 import ClinicCard from "../ui/ClinicCard";
 import SpecialtyCard from "../ui/SpecialtyCard";
-import { IconStethoscope, IconAlert, IconPill, IconFlask } from "../ui/Icons";
+import { IconCross, IconStethoscope, IconAlert, IconPill, IconFlask } from "../ui/Icons";
 
 interface HomeScreenProps {
   search: string;
@@ -24,7 +24,6 @@ function doctorId(d: FlatRecord) {
   return `${d._category}:${d.name}`;
 }
 
-/* ── Quick action buttons ──────────────────────────────── */
 const QUICK = [
   { label: "أطباء",    key: "doctors",    from: "#0d9488", to: "#0f766e", Icon: IconStethoscope },
   { label: "طوارئ",   key: "emergency",  from: "#ef4444", to: "#b91c1c", Icon: IconAlert },
@@ -32,7 +31,6 @@ const QUICK = [
   { label: "مختبرات", key: "labs",       from: "#d97706", to: "#b45309", Icon: IconFlask },
 ];
 
-/* ── Photo banners ─────────────────────────────────────── */
 const BANNERS = [
   { title: "عيادات طب الأسنان", sub: "تقويم • زراعة • تجميل",
     cta: "احجز الآن", href: "tel:+9647700000000", badge: "✦ مميز",
@@ -68,33 +66,42 @@ export default function HomeScreen({
   return (
     <div className="animate-fade-in">
 
-      {/* ═══════════════════════ HERO ════════════════════════ */}
-      <div className="relative overflow-hidden pb-20 lg:pb-24"
+      {/* ═══ HERO ═══ */}
+      <div className="relative overflow-hidden pb-14 lg:pb-24"
         style={{ background: "linear-gradient(160deg,#0a2e2a 0%,#0f766e 50%,#0d9488 100%)" }}>
 
-        {/* Blobs */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute -top-16 -right-16 w-72 h-72 rounded-full"
+          <div className="absolute -top-16 -right-16 w-56 h-56 lg:w-72 lg:h-72 rounded-full"
             style={{ background: "radial-gradient(circle,rgba(45,212,191,0.18),transparent 70%)" }} />
-          <div className="absolute bottom-10 -left-10 w-56 h-56 rounded-full"
+          <div className="absolute bottom-10 -left-10 w-40 h-40 lg:w-56 lg:h-56 rounded-full"
             style={{ background: "radial-gradient(circle,rgba(250,204,21,0.10),transparent 70%)" }} />
-          <div className="absolute inset-0 opacity-[0.035]"
-            style={{ backgroundImage: "linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px)", backgroundSize: "40px 40px" }} />
         </div>
 
-        <div className="relative page-container pt-10 lg:pt-16">
+        <div className="relative page-container pt-[calc(0.75rem+env(safe-area-inset-top,0px))] lg:pt-16">
+          {/* Mobile app bar */}
+          <div className="flex items-center gap-2.5 mb-4 lg:hidden">
+            <div className="w-9 h-9 rounded-xl flex items-center justify-center shadow-md"
+              style={{ background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.2)" }}>
+              <IconCross size={18} className="text-white" strokeWidth={2.5} />
+            </div>
+            <div className="min-w-0">
+              <p className="font-display font-extrabold text-white text-[15px] leading-tight truncate">دليل الفلوجة الطبي</p>
+              <p className="text-teal-200/80 text-[10px] font-semibold tracking-wide">FALLUJAH HEALTH</p>
+            </div>
+          </div>
+
           <div className="lg:flex lg:items-center lg:justify-between lg:gap-12">
             <div className="lg:flex-1">
-              <span className="inline-flex items-center gap-1.5 text-teal-200 text-[13px] font-semibold mb-3">
-                <span className="w-2 h-2 rounded-full bg-teal-300 animate-pulse" />
+              <span className="inline-flex items-center gap-1.5 text-teal-200 text-[12px] font-semibold mb-2 lg:mb-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-teal-300 animate-pulse" />
                 {greeting}
               </span>
-              <h1 className="font-display text-[28px] lg:text-[44px] font-extrabold text-white leading-tight tracking-tight">
-                دليل الفلوجة<br />
-                <span className="text-teal-300">الطبي</span>
+              <h1 className="font-display text-[22px] sm:text-[26px] lg:text-[44px] font-extrabold text-white leading-tight tracking-tight">
+                ابحث عن طبيب<br className="lg:hidden" />
+                <span className="text-teal-300"> في الفلوجة</span>
               </h1>
-              <p className="text-teal-100/70 text-[14px] lg:text-[16px] mt-2 lg:mt-3 max-w-md">
-                ابحث عن أفضل الأطباء والعيادات — رعاية صحية موثوقة
+              <p className="text-teal-100/70 text-[13px] lg:text-[16px] mt-1.5 lg:mt-3 max-w-md">
+                أطباء • عيادات • صيدليات • مختبرات
               </p>
               <div className="hidden lg:block mt-6 max-w-lg">
                 <SearchBar value={search} onChange={onSearchChange}
@@ -102,7 +109,7 @@ export default function HomeScreen({
                   large placeholder="ابحث عن طبيب، تخصص، عيادة..." />
               </div>
             </div>
-            {/* Desktop hero image */}
+
             <div className="hidden lg:block flex-shrink-0">
               <div className="relative w-[300px] h-[220px] rounded-2xl overflow-hidden shadow-[0_24px_64px_rgba(0,0,0,0.40)]"
                 style={{ border: "2px solid rgba(255,255,255,0.15)" }}>
@@ -129,61 +136,61 @@ export default function HomeScreen({
         </div>
 
         <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg"
-          className="absolute bottom-0 left-0 w-full" preserveAspectRatio="none" style={{ height: 56 }}>
+          className="absolute bottom-0 left-0 w-full" preserveAspectRatio="none" style={{ height: 48 }}>
           <path d="M0,60 C480,0 960,0 1440,60 L1440,60 L0,60 Z" fill="#f0fdf9" />
         </svg>
       </div>
 
-      {/* ════ Floating search + stats strip (MOBILE) ════════ */}
-      <div className="page-container -mt-10 lg:hidden space-y-3">
-        <div className="bg-white rounded-2xl shadow-[0_8px_32px_rgba(13,148,136,0.18)] p-3 border border-teal-100">
+      {/* Mobile search + stats */}
+      <div className="page-container -mt-7 lg:hidden space-y-2.5">
+        <div className="bg-white rounded-2xl shadow-[0_6px_24px_rgba(13,148,136,0.14)] p-2.5 border border-teal-100">
           <SearchBar value={search} onChange={onSearchChange}
             onFocus={onSearchFocus} onEnter={onSearchEnter}
-            large placeholder="ابحث عن طبيب، تخصص، عيادة..." />
+            large placeholder="ابحث عن طبيب، تخصص..." />
         </div>
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-4 gap-1.5">
           {STATS.map((s) => (
-            <div key={s.label} className="bg-white rounded-xl py-2.5 text-center shadow-[var(--shadow-soft)] border border-teal-50">
-              <span className="font-display font-extrabold text-[16px] text-primary-700 block leading-none">{s.n}</span>
-              <span className="text-gray-400 text-[10px] font-medium mt-0.5 block">{s.label}</span>
+            <div key={s.label} className="bg-white rounded-xl py-2 text-center shadow-[var(--shadow-soft)] border border-teal-50">
+              <span className="font-display font-extrabold text-[14px] text-primary-700 block leading-none">{s.n}</span>
+              <span className="text-gray-400 text-[9px] font-medium mt-0.5 block">{s.label}</span>
             </div>
           ))}
         </div>
       </div>
 
-      {/* ═══════════════ CONTENT ════════════════════════════ */}
-      <div className="page-container py-6 lg:py-8 space-y-10 lg:space-y-14">
+      {/* Content */}
+      <div className="page-container py-5 lg:py-8 mobile-section-gap">
 
-        {/* ── 1. Quick actions ─────────────────────────────── */}
+        {/* Quick actions */}
         <section>
-          <div className="grid grid-cols-4 gap-3 lg:gap-5">
+          <div className="grid grid-cols-4 gap-2 lg:gap-5">
             {QUICK.map(({ label, key, from, to, Icon }) => (
               <button key={key} type="button"
                 onClick={() => onSpecialtySelect(key)}
-                className="group flex flex-col items-center gap-2.5 transition-transform active:scale-95"
+                className="group flex flex-col items-center gap-1.5 lg:gap-2.5 transition-transform active:scale-95"
               >
                 <div
-                  className="w-[62px] h-[62px] lg:w-[76px] lg:h-[76px] rounded-2xl lg:rounded-3xl flex items-center justify-center shadow-md transition-all group-hover:scale-105 group-hover:shadow-lg"
+                  className="w-14 h-14 lg:w-[76px] lg:h-[76px] rounded-2xl lg:rounded-3xl flex items-center justify-center shadow-md transition-all group-hover:scale-105"
                   style={{ background: `linear-gradient(145deg,${from},${to})` }}
                 >
-                  <Icon size={28} className="text-white" />
+                  <Icon size={24} className="text-white lg:hidden" />
+                  <Icon size={28} className="text-white hidden lg:block" />
                 </div>
-                <span className="text-[12px] lg:text-[13px] font-bold text-gray-700">{label}</span>
+                <span className="text-[11px] lg:text-[13px] font-bold text-gray-700">{label}</span>
               </button>
             ))}
           </div>
         </section>
 
-        {/* ── 2. Specialties (all from data) ───────────────── */}
+        {/* Specialties */}
         <section>
-          <div className="flex items-center justify-between mb-4">
+          <div className="section-head">
             <h2 className="section-title">التخصصات</h2>
-            <button type="button" onClick={() => onSpecialtySelect("all")}
-              className="text-[12.5px] font-bold text-primary-600 hover:text-primary-700">الكل ←</button>
+            <button type="button" onClick={() => onSpecialtySelect("all")} className="section-link">الكل ←</button>
           </div>
-          <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2 lg:hidden">
+          <div className="scroll-row lg:hidden">
             {CLINICAL_SPECIALTIES.map((s) => (
-              <div key={s.key} className="flex-shrink-0 w-[80px]">
+              <div key={s.key} className="flex-shrink-0 w-[72px]">
                 <SpecialtyCard
                   label={s.label}
                   icon={s.icon}
@@ -191,7 +198,7 @@ export default function HomeScreen({
                   categoryKey={s.key}
                   img={s.img}
                   variant="photo"
-                  size="md"
+                  size="sm"
                   onClick={() => onSpecialtySelect(s.key)}
                 />
               </div>
@@ -213,27 +220,27 @@ export default function HomeScreen({
           </div>
         </section>
 
-        {/* ── 3. Photo banners ─────────────────────────────── */}
+        {/* Banners */}
         <section>
-          <h2 className="section-title mb-4">عروض وخدمات</h2>
-          <div className="flex gap-3 overflow-x-auto no-scrollbar pb-1 lg:grid lg:grid-cols-3 lg:overflow-visible lg:gap-5">
+          <h2 className="section-title">عروض وخدمات</h2>
+          <div className="scroll-row mt-3.5 lg:mt-4 lg:grid lg:grid-cols-3 lg:overflow-visible lg:gap-5 lg:mx-0 lg:px-0">
             {BANNERS.map((b) => (
               <a key={b.title} href={b.href}
-                className="flex-shrink-0 w-[76vw] max-w-[280px] lg:w-auto relative overflow-hidden rounded-2xl card-hover shadow-[var(--shadow-card)]"
-                style={{ minHeight: 195 }}
+                className="flex-shrink-0 w-[calc(100vw-2.5rem)] max-w-[300px] lg:w-auto lg:max-w-none relative overflow-hidden rounded-2xl card-hover shadow-[var(--shadow-card)]"
+                style={{ minHeight: 168 }}
               >
                 <img src={b.img} alt={b.title}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                  className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute inset-0" style={{ background: b.overlay }} />
-                <div className="relative z-10 p-5 h-full flex flex-col justify-end text-right">
-                  <span className="self-end mb-2 text-[11px] font-bold text-white px-2.5 py-1 rounded-full"
+                <div className="relative z-10 p-4 h-full flex flex-col justify-end text-right">
+                  <span className="self-end mb-1.5 text-[10px] font-bold text-white px-2 py-0.5 rounded-full"
                     style={{ background: "rgba(255,255,255,0.22)", backdropFilter: "blur(6px)" }}>
                     {b.badge}
                   </span>
-                  <p className="font-display font-extrabold text-white text-[17px] leading-tight drop-shadow-md">{b.title}</p>
-                  <p className="text-white/80 text-[12px] mt-1">{b.sub}</p>
-                  <span className="inline-flex self-end items-center gap-1 mt-3 text-white text-[12px] font-bold px-4 py-2 rounded-xl transition-colors"
-                    style={{ background: "rgba(255,255,255,0.22)", backdropFilter: "blur(6px)" }}>
+                  <p className="font-display font-extrabold text-white text-[15px] leading-tight">{b.title}</p>
+                  <p className="text-white/80 text-[11px] mt-0.5">{b.sub}</p>
+                  <span className="inline-flex self-end items-center mt-2 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg"
+                    style={{ background: "rgba(255,255,255,0.22)" }}>
                     {b.cta} ←
                   </span>
                 </div>
@@ -242,26 +249,24 @@ export default function HomeScreen({
           </div>
         </section>
 
-        {/* ── 4. Featured doctors (horizontal scroll) ──────── */}
+        {/* Featured doctors */}
         <section>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="section-title">أطباء مميزون ✨</h2>
-            <button type="button" onClick={() => onSpecialtySelect("doctors")}
-              className="text-[12.5px] font-bold text-primary-600 hover:text-primary-700">عرض الكل ←</button>
+          <div className="section-head">
+            <h2 className="section-title">أطباء مميزون</h2>
+            <button type="button" onClick={() => onSpecialtySelect("doctors")} className="section-link">عرض الكل ←</button>
           </div>
-          <div className="flex gap-3 overflow-x-auto no-scrollbar pb-2 lg:grid lg:grid-cols-4 xl:grid-cols-5 lg:overflow-visible lg:gap-4">
+          <div className="scroll-row lg:grid lg:grid-cols-4 xl:grid-cols-5 lg:overflow-visible lg:gap-4 lg:mx-0 lg:px-0">
             {featured.map((d) => (
               <DoctorCard key={doctorId(d)} doctor={d} compact onOpen={() => onDoctorOpen(d)} />
             ))}
           </div>
         </section>
 
-        {/* ── 5. Best doctors — full list ───────────────────── */}
-        <section>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="section-title">أفضل الأطباء 🏅</h2>
-            <button type="button" onClick={() => onSpecialtySelect("doctors")}
-              className="text-[12.5px] font-bold text-primary-600 hover:text-primary-700">الكل ←</button>
+        {/* Desktop-only extra sections */}
+        <section className="hidden lg:block">
+          <div className="section-head">
+            <h2 className="section-title">أفضل الأطباء</h2>
+            <button type="button" onClick={() => onSpecialtySelect("doctors")} className="section-link">الكل ←</button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
             {topDoctors.map((d) => (
@@ -273,9 +278,8 @@ export default function HomeScreen({
           </div>
         </section>
 
-        {/* ── 6. Nearby clinics ────────────────────────────── */}
-        <section>
-          <h2 className="section-title mb-4">عيادات قريبة 📍</h2>
+        <section className="hidden lg:block">
+          <h2 className="section-title mb-4">عيادات قريبة</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5">
             {nearby.map((d) => (
               <ClinicCard key={doctorId(d)} clinic={d} onOpen={() => onDoctorOpen(d)} />

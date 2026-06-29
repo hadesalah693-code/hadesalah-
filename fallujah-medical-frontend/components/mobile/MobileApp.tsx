@@ -5,6 +5,7 @@ import type { FlatRecord } from "@/types";
 import { DOCTORS } from "@/lib/doctors";
 import BottomNav, { type TabId } from "./BottomNav";
 import DesktopNav from "./DesktopNav";
+import MobileHeader from "./MobileHeader";
 import HomeScreen from "./HomeScreen";
 import SearchScreen from "./SearchScreen";
 import DoctorDetailView from "./DoctorDetailView";
@@ -103,6 +104,7 @@ export default function MobileApp() {
   return (
     <div className="app-shell min-h-dvh bg-gray-50 lg:bg-transparent">
       <DesktopNav active={tab} onChange={setTab} search={search} onSearchChange={handleSearchChange} onSearchEnter={goToSearch} />
+      <MobileHeader active={tab} onHome={() => setTab("home")} />
 
       <main className="main-content min-h-dvh">
         {tab === "home" && (
@@ -136,8 +138,8 @@ export default function MobileApp() {
         )}
 
         {tab === "appointments" && (
-          <div className="page-container pt-4 animate-fade-in">
-            <h1 className="font-display text-[20px] lg:text-[24px] font-bold text-gray-900 mb-4 lg:mb-6">مواعيدي</h1>
+          <div className="page-container pt-3 lg:pt-4 animate-fade-in">
+            <h1 className="hidden lg:block font-display text-[24px] font-bold text-gray-900 mb-6">مواعيدي</h1>
             {appointments.length === 0 ? (
               <EmptyState
                 title="لا توجد مواعيد"
@@ -161,8 +163,8 @@ export default function MobileApp() {
         )}
 
         {tab === "favorites" && (
-          <div className="page-container pt-4 animate-fade-in">
-            <h1 className="font-display text-[20px] lg:text-[24px] font-bold text-gray-900 mb-4 lg:mb-6">المفضلة</h1>
+          <div className="page-container pt-3 lg:pt-4 animate-fade-in">
+            <h1 className="hidden lg:block font-display text-[24px] font-bold text-gray-900 mb-6">المفضلة</h1>
             {favDoctors.length === 0 ? (
               <EmptyState
                 title="قائمة فارغة"
@@ -187,8 +189,8 @@ export default function MobileApp() {
         )}
 
         {tab === "profile" && (
-          <div className="page-container pt-4 animate-fade-in max-w-2xl">
-            <h1 className="font-display text-[20px] lg:text-[24px] font-bold text-gray-900 mb-6">حسابي</h1>
+          <div className="page-container pt-3 lg:pt-4 animate-fade-in max-w-2xl">
+            <h1 className="hidden lg:block font-display text-[24px] font-bold text-gray-900 mb-6">حسابي</h1>
             <div className="bg-white rounded-[var(--radius-card)] border border-gray-100 shadow-[var(--shadow-soft)] p-5 mb-4">
               <div className="w-16 h-16 rounded-2xl bg-primary-100 text-primary-600 flex items-center justify-center mb-3">
                 <IconUser size={32} />

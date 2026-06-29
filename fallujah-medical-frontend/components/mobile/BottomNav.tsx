@@ -29,15 +29,15 @@ export default function BottomNav({ active, onChange }: BottomNavProps) {
         boxShadow: "0 -4px 20px rgba(13,148,136,0.08)",
       }}
     >
-      <div className="flex items-end justify-around px-1 pt-2 pb-1 max-w-lg mx-auto">
+      <div className="flex items-end justify-around px-0.5 pt-1.5 pb-0.5 max-w-lg mx-auto">
         {TABS.map(({ id, label, Icon }) => {
           const isActive = active === id;
           return (
             <button key={id} type="button" onClick={() => onChange(id)}
-              className="flex flex-col items-center gap-0.5 flex-1 pb-0.5 transition-all duration-200"
+              className="flex flex-col items-center gap-0.5 flex-1 min-h-[52px] justify-end transition-all duration-200 active:scale-95"
             >
               <div
-                className="flex items-center justify-center w-10 h-9 rounded-2xl transition-all duration-250"
+                className="flex items-center justify-center w-11 h-10 rounded-2xl transition-all duration-250"
                 style={
                   isActive
                     ? {

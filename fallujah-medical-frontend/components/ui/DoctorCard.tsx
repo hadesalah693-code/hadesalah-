@@ -32,10 +32,10 @@ export default function DoctorCard({
   if (compact) {
     return (
       <button type="button" onClick={onOpen}
-        className="flex-shrink-0 w-[140px] lg:w-full bg-white rounded-2xl shadow-[var(--shadow-soft)] overflow-hidden text-right group transition-all duration-200 hover:shadow-[var(--shadow-card)] active:scale-[0.97]"
+        className="flex-shrink-0 w-[132px] sm:w-[140px] lg:w-full bg-white rounded-2xl shadow-[var(--shadow-soft)] overflow-hidden text-right group transition-all duration-200 hover:shadow-[var(--shadow-card)] active:scale-[0.97]"
       >
         {/* Gradient header with big initial */}
-        <div className="h-[88px] relative flex items-center justify-center overflow-hidden"
+        <div className="h-[80px] lg:h-[88px] relative flex items-center justify-center overflow-hidden"
           style={{ background: `linear-gradient(145deg,${color}ee 0%,${color}77 100%)` }}>
           <span className="absolute text-[64px] font-display font-extrabold text-white/10 leading-none select-none top-1">
             {initial}

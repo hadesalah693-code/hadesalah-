@@ -41,14 +41,14 @@ export default function SearchScreen({
   const activeSpecialty = ALL_SPECIALTIES.find((s) => s.key === specialty);
 
   return (
-    <div className="page-container pt-4 animate-fade-in pb-6">
-      <h1 className="font-display text-[20px] lg:text-[24px] font-bold text-gray-900 mb-4 lg:mb-6">البحث</h1>
-      <div className="max-w-2xl lg:hidden">
+    <div className="page-container pt-3 lg:pt-4 animate-fade-in pb-6">
+      <h1 className="hidden lg:block font-display text-[24px] font-bold text-gray-900 mb-6">البحث</h1>
+      <div className="lg:hidden mb-3">
         <SearchBar value={search} onChange={onSearchChange} onEnter={onSearchEnter} large />
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1.5 mt-4 overflow-x-auto no-scrollbar pb-1">
+      <div className="scroll-row gap-1.5 lg:flex lg:flex-wrap lg:mx-0 lg:px-0 lg:overflow-visible">
         {TABS.map(({ id, label }) => (
           <button
             key={id}
@@ -81,9 +81,9 @@ export default function SearchScreen({
 
       {/* All specialties — photo grid */}
       {!specialty && (
-        <section className="mt-5">
+        <section className="mt-4 lg:mt-5">
           <h2 className="section-title mb-3">تصفّح حسب التخصص</h2>
-          <div className="grid grid-cols-4 sm:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-x-3 gap-y-5">
+          <div className="grid grid-cols-4 gap-x-2 gap-y-4 sm:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 lg:gap-x-3 lg:gap-y-5">
             {CLINICAL_SPECIALTIES.map((s) => (
               <SpecialtyCard
                 key={s.key}
@@ -99,8 +99,8 @@ export default function SearchScreen({
           </div>
 
           {/* Services row */}
-          <h3 className="text-[14px] font-bold text-gray-700 mt-6 mb-3">خدمات أخرى</h3>
-          <div className="grid grid-cols-4 sm:grid-cols-5 lg:grid-cols-6 gap-x-3 gap-y-5">
+          <h3 className="text-[13px] font-bold text-gray-700 mt-5 lg:mt-6 mb-3">خدمات أخرى</h3>
+          <div className="grid grid-cols-4 gap-x-2 gap-y-4 sm:grid-cols-5 lg:grid-cols-6 lg:gap-x-3 lg:gap-y-5">
             {ALL_SPECIALTIES.filter((s) => !s.clinical).map((s) => (
               <SpecialtyCard
                 key={s.key}
